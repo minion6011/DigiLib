@@ -2,16 +2,24 @@
 
 .banner {
     & {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        height: 200px;
+
+        overflow: hidden;
+
         font-family: 'Montserrat', sans-serif;
         background-color: #F7F9FC;
-        padding: 30px 40px;
     }
     .text {
         & {
             display: flex;
             flex-direction: column;
-
             gap: 7.5px;
+
+            padding: 40px;
         }
         .sub-title {
             font-weight: 650;
@@ -22,7 +30,7 @@
             color: #1172f4;
         }
         .title {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
 
             letter-spacing: 0.9px;
@@ -34,6 +42,17 @@
             font-size: 0.9rem;
             
             color: #8a96a7;
+        }
+    }
+    img {
+        & {
+            height: 100%;
+            object-fit: cover;
+        }
+        @media (max-width: 1010px) {
+            & {
+                display: none;
+            }
         }
     }
 }
