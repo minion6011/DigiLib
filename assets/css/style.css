@@ -123,6 +123,8 @@ div.logo {
         overflow: auto;
     }
     .books-table {
+        --border-color: #f1f4f9;
+
         & {
             display: flex;
             flex-direction: column;
@@ -130,6 +132,10 @@ div.logo {
         }
 
         .search-bar {
+            & {
+                display: flex;
+                gap: 15px;
+            }
             .input {
                 & {
                     display: grid;
@@ -137,12 +143,14 @@ div.logo {
                     align-items: center;
                     gap: 7.5px;
 
+                    width: 100%;
+                    padding: 10px;
+
                     font-family: 'Montserrat', sans-serif;
 
-                    border: #f1f4f9 2px solid;
+                    border: var(--border-color) 2px solid;
+                    background-color: #fff;
                     border-radius: 10px;
-
-                    padding: 10px;
                 }
                 input {
                     & {
@@ -154,11 +162,25 @@ div.logo {
                         color: #a4aebc;
                     }
                 }
+                button {
+                    border: 0;
+                    padding: 0;
+                    background-color: #fff;
+                }
                 i {
                     color: #49596d;
-                    font-size: 1.2em;
+                    font-size: 1.3rem;
+                }
+            }
+            select {
+                & {
+                    font-family: 'Montserrat', sans-serif;
 
-                    cursor: pointer;
+                    padding: 10px;
+
+                    background-color: #fff;
+                    border: var(--border-color) 2px solid;
+                    border-radius: 10px;
                 }
             }
         }
@@ -172,11 +194,19 @@ div.logo {
                 overflow: hidden;
 
                 font-family: 'Montserrat', sans-serif;
-                border: #f1f4f9 2px solid;
+                border: var(--border-color) 2px solid;
             }
-            &, tr:not(:last-child) td, th {
-                border-bottom: #f1f4f9 2px solid;
+            
+            &:has(tbody tr) {
+                th {
+                    border-bottom: var(--border-color) 2px solid;
+                }
             }
+
+            tbody tr:not(:last-child) td {
+                border-bottom: var(--border-color) 2px solid;
+            }
+
             @media (max-width: 1010px) {
                 .mb-nd { /* Mobile Not Display */
                     display: none;
@@ -285,7 +315,7 @@ div.logo {
     .socials {
         i {
             color: #ffffff;
-            font-size: 2.2em;
+            font-size: 1.85rem;
 
             cursor: pointer;
         }

@@ -32,12 +32,19 @@
 
     <div class="content">
         <div class="books-table">
-            <div class="search-bar">
+            <form class="search-bar">
                 <div class="input">
-                    <i class="fa fa-search"></i>
-                    <input placeholder="Cerca per titolo, autore...">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <input name="search" placeholder="Cerca per titolo, autore...">
                 </div>
-            </div>
+                <select name="searchtype">
+                    <option value="name">Titolo</option>
+                    <option value="author">Autore</option>
+                    <option value="position">Posizione</option>
+                </select>
+            </form>
 
             <table>
                 <thead>
@@ -47,6 +54,7 @@
                         <th class="mb-nd">Autore</th>
                         <th class="mb-nd">Genere</th>
                         <th>Disponibilità</th>
+                        <th class="mb-nd">Posizione</th>
                         <th class="mb-nd">Rilascio</th>
                     </tr>
                 </thead>
@@ -54,7 +62,29 @@
                 <tbody>
                     <?php
                         require_once("main.php");
-                    
+
+                        $params = [];
+                        $searchquery = "";
+
+                        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                            if (isset($_GET["searchtype"]) && isset($_GET["search"])) {
+                                switch ($_GET["searchtype"]) {
+                                    case "name":
+                                        $searchquery = "WHERE b.name LIKE :search";
+                                        break;
+                                    case "author":
+                                        $searchquery = "WHERE b.author LIKE :search";
+                                        break;
+                                    case "position":
+                                        $searchquery = "WHERE b.position LIKE :search";
+                                        break;
+                                }
+
+                                if ($searchquery != "")
+                                    $params[':search'] = '%' . $_GET['search'] . '%';
+                            }
+                        }
+
                         $sql = "
                             SELECT
                                 b.id,
@@ -62,17 +92,20 @@
                                 b.name,
                                 b.author,
                                 b.state,
+                                b.position,
                                 b.publish_date AS date,
                                 t.name AS tag_name,
                                 t.color AS tag_color,
                                 t.background AS tag_bg
                             FROM books b
                             JOIN tags t ON b.tag_id = t.id
-                            ORDER BY id LIMIT 100
+                            {$searchquery}
+                            ORDER BY id
+                            LIMIT 100
                         ";
 
                         $stmt = $conn -> prepare($sql);
-                        $stmt -> execute();
+                        $stmt -> execute($params);
 
                         foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
                     ?>
@@ -111,6 +144,10 @@
                                         break;
                                 }
                             ?>
+                        </td>
+
+                        <td class="mb-nd">
+                            <?= $row->position ?>
                         </td>
 
                         <td class="mb-nd"><?= str_replace("-", "/", ($row->date)) ?></td>
