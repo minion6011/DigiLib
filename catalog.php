@@ -15,8 +15,6 @@
         include("components/navbar.php")
     ?>
 
-    <p class="centercheck">•</p>
-
     <div class="banner">
         <div class="text">
             <p class="sub-title">Catalogo</p>

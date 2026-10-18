@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); /* Monteserrat */
-
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'); /* Icons */
 
 html, body {
     margin: 0;
     overflow-x: hidden;
 
-    min-height: 110vh; /* Suggested 100vh / 100dvh */
-    min-height: 110dvh;
+    min-height: 120vh; /* Suggested 100vh / 100dvh */
+    min-height: 120dvh;
 
     display: flex;
     flex-direction: column;
@@ -157,6 +156,9 @@ div.logo {
                         border: 0;
                         outline: 0;
                         font-size: 0.9rem;
+                        
+                        min-width: 0;
+                        width: 100%;
                     }
                     &::placeholder {
                         color: #a4aebc;
@@ -166,6 +168,8 @@ div.logo {
                     border: 0;
                     padding: 0;
                     background-color: #fff;
+
+                    cursor: pointer;
                 }
                 i {
                     color: #49596d;
