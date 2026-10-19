@@ -1,0 +1,62 @@
+.banner {
+    & {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        height: 200px;
+
+        overflow: hidden;
+
+        font-family: 'Montserrat', sans-serif;
+        background-color: #F7F9FC;
+    }
+    .text {
+        & {
+            display: flex;
+            flex-direction: column;
+            gap: 7.5px;
+
+            padding: 40px;
+        }
+        .sub-title {
+            font-weight: 650;
+            text-transform: uppercase;
+
+            letter-spacing: 0.85px;
+
+            color: #1172f4;
+        }
+        .title {
+            font-size: 1.75rem;
+            font-weight: 700;
+
+            letter-spacing: 0.9px;
+
+            color: #122037;
+        }
+        .details {
+            font-weight: 450;
+            font-size: 0.9rem;
+            
+            color: #8a96a7;
+        }
+    }
+    img {
+        & {
+            height: 100%;
+            object-fit: cover;
+        }
+        @media (max-width: 1010px) {
+            & {
+                display: none;
+            }
+        }
+    }
+}
+
+.content {
+    & {
+        margin: 30px 40px;
+    }
+}

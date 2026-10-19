@@ -9,7 +9,7 @@
 
     // Config
     $ini = parse_ini_file(__DIR__ . "/config.ini", true);
-    if ($ini === false) {
+    if (!$ini) {
         die("ini file not found");
     }
 
@@ -29,21 +29,24 @@
     }
     
 
-    function login(int $userid, bool $permission) {
+    function login(int $userid, bool $isAdmin) {
         session_regenerate_id(true);
         $_SESSION['user_id'] = $userid;
-        $_SESSION['isAdmin'] = $permission;
+        $_SESSION['isAdmin'] = $isAdmin;
     }
 
-    function requireLogin(PDO $conn) {
-        if (!loggedIn($conn)) {
-            $current_url = $_SERVER['REQUEST_URI'];
-            header("Location: login.php?redirect=" . urlencode($current_url));
+    function requireLogin(PDO $conn, bool $needAdmin) {
+        $current_url = $_SERVER['REQUEST_URI'];
+        if (!loggedIn($conn, $needAdmin)) {
+            if ($needAdmin)
+                header("Location: login.php?err=permission?redirect=" . urlencode($current_url));
+            else
+                header("Location: login.php?redirect=" . urlencode($current_url));
             exit;
         }
     }
 
-    function loggedIn(PDO $conn): bool {
+    function loggedIn(PDO $conn, bool $needAdmin): bool {
         if (empty($_SESSION['user_id']))
             return false;
         
@@ -54,8 +57,14 @@
         
         $result = (bool) $stmt->fetchColumn();
 
-        if (!$result) // reset
+        if (!$result) {// reset
             unset($_SESSION['user_id']);
+            unset($_SESSION['isAdmin']);
+        }
+
+        if ($needAdmin && isset($_SESSION["isAdmin"]))
+            if (!$_SESSION["isAdmin"])
+                return false;
 
         return $result;
     }

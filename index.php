@@ -33,7 +33,7 @@
                     </button>
                 </a>
 
-                <a href="request.php">
+                <a href="suggestion.php">
                     <button class="request">
                         <i class="fa fa-paper-plane"></i>
                         Richiedi un libro

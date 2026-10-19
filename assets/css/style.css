@@ -58,6 +58,7 @@ a {
             grid-auto-columns: 1fr;
             align-items: center;
             text-align: center;
+            justify-items: center;
 
             gap: 17.5px;
 
@@ -87,8 +88,26 @@ a {
     }
 
     .btns {
-        display: flex;
-        justify-content: flex-end;
+        & {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .account {
+            & {
+                display: flex;
+                justify-content: center;
+                align-self: center;
+
+                border: 2px solid #fff;
+                padding: 6px;
+                border-radius: 50px;
+            }
+            img {
+                width: 20px;
+                aspect-ratio: 1 / 1;
+            }
+        }
     }
 }
 
