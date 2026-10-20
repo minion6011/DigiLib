@@ -1,3 +1,35 @@
+<?php 
+    require_once("main.php");
+?>
+
+<?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        requireLogin($conn, false);
+
+        if (!isset($_POST["title"]) || !isset($_POST["notes"]))
+            return;
+        $title = $_POST["title"];
+        $notes = $_POST["notes"];
+        $id = $_SESSION["user_id"];
+        try {
+            $sql = "INSERT INTO suggestions (title, notes, creator) VALUES (:title, :notes, :creator)";
+            $stmt = $conn -> prepare($sql);
+            $stmt -> execute([
+                "title" => $title,
+                "notes" => $notes,
+                "creator" => $id
+            ]);
+
+            //$id = $stmt -> fetch(PDO::FETCH_OBJ) -> id;
+            //$id = $conn -> lastInsertId();
+
+            header("Location: " . $_SERVER['REQUEST_URI']);
+        } catch (PDOException $e) {
+            //echo $sql . "<br>" . $e->getMessage();
+            return;
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -31,11 +63,11 @@
                 la prossima aggiunta al catalogo
             </p>
         </div>
-        <img src="assets/images/ui/bannerCatalog.svg">
+        <img src="assets/images/ui/bannerSuggestion.svg">
     </div>
 
     <div class="content">
-        <form class="card">
+        <form class="card" method="POST">
             <div class="title">
                 <div class="ico">
                     <i class="fa fa-lightbulb-o"></i>
@@ -88,8 +120,6 @@
 
                 <tbody>
                     <?php
-                        require_once("main.php");
-
                         $sql = "
                             SELECT
                                 id,
@@ -120,7 +150,7 @@
             </table>
         </div>
     </div>
-
+    
     <?php
         include("components/footer.php")
     ?>
