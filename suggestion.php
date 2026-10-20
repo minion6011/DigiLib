@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DigiLib | Catalogo Libri</title>
+    <title>DigiLib | Suggerisci un libro</title>
     <link rel="icon" href="assets/images/ui/logo.svg"/>
     
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/catalog.css">
+    <link rel="stylesheet" href="assets/css/suggestion.css">
 </head>
 <body>
     <?php
@@ -17,43 +17,72 @@
 
     <div class="banner">
         <div class="text">
-            <p class="sub-title">Catalogo</p>
-            <p class="title">Scopri i nostri libri</p>
+            <p class="sub-title">Proponi un libro</p>
+            <p class="title">
+                Hai un libro che vorresti 
+                <br>
+                nella nostra biblioteca?
+            </p>
             <p class="details">
-                Qui trovi tutti i libri disponibili nel nostro catalogo. Puoi cercare, filtrare 
-                <br> 
-                e visualizzare i dettagli di ogni titolo.
-        </p>
+                Se hai un'idea o un titolo che ti piacerebbe leggere, 
+                <br>
+                puoi suggerirlo qui. Il tuo suggerimento potrebbe diventare
+                <br>
+                la prossima aggiunta al catalogo
+            </p>
         </div>
-        <img src="assets/images/ui/banner.svg">
+        <img src="assets/images/ui/bannerCatalog.svg">
     </div>
 
     <div class="content">
-        <div class="books-table">
-            <form class="search-bar">
-                <div class="input">
-                    <button type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <input name="search" placeholder="Cerca per titolo, autore...">
+        <form class="card">
+            <div class="title">
+                <div class="ico">
+                    <i class="fa fa-lightbulb-o"></i>
                 </div>
-                <select name="searchtype">
-                    <option value="name">Titolo</option>
-                    <option value="author">Autore</option>
-                    <option value="position">Posizione</option>
-                </select>
-            </form>
-
+                <div class="text">
+                    <p class="title">Fai una proposta</p>
+                    <p class="description">Compila i campi qui sotto con il titolo del libro e, se vuoi, aggiungi delle note.</p>
+                </div>
+            </div>
+            <div class="inputs">
+                <div class="input">
+                    <p class="title">Nome del libro</p>
+                    <div class="box">
+                        <div class="ico">
+                            <img src="components/avatar.php?color=5b6e86">
+                        </div>
+                        <input maxlength="255" name="title" required type="text" placeholder="Inserisci il titolo del libro...">
+                    </div>
+                </div>
+                <div class="input">
+                    <p class="title">Note</p>
+                    <div class="box">
+                        <div class="ico">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <textarea
+                            maxlength="2047" 
+                            name="notes"
+                            placeholder="Puoi aggiungere autore, genere, motivo della proposta, link o altre informazioni utili..."
+                            rows="5" 
+                            cols="33"    
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">
+                <i class="fa fa-paper-plane"></i>
+                Invia proposta
+            </button>
+        </form>
+        <div class="books-table">
             <table>
                 <thead>
                     <tr>
-                        <th class="mb-nd">Copertina</th>
                         <th>Titolo</th>
-                        <th class="mb-nd">Autore</th>
-                        <th class="mb-nd">Genere</th>
-                        <th>Disponibilità</th>
-                        <th class="mb-nd">Posizione</th>
-                        <th class="mb-nd">Rilascio</th>
+                        <th>Note</th>
+                        <th>Data</th>
                     </tr>
                 </thead>
 
@@ -61,96 +90,29 @@
                     <?php
                         require_once("main.php");
 
-                        $params = [];
-                        $searchquery = "";
-
-                        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                            if (isset($_GET["searchtype"]) && isset($_GET["search"])) {
-                                switch ($_GET["searchtype"]) {
-                                    case "name":
-                                        $searchquery = "WHERE b.name LIKE :search";
-                                        break;
-                                    case "author":
-                                        $searchquery = "WHERE b.author LIKE :search";
-                                        break;
-                                    case "position":
-                                        $searchquery = "WHERE b.position LIKE :search";
-                                        break;
-                                }
-
-                                if ($searchquery != "")
-                                    $params[':search'] = '%' . $_GET['search'] . '%';
-                            }
-                        }
-
                         $sql = "
                             SELECT
-                                b.id,
-                                b.img,
-                                b.name,
-                                b.author,
-                                b.state,
-                                b.position,
-                                b.publish_date AS date,
-                                t.name AS tag_name,
-                                t.color AS tag_color,
-                                t.background AS tag_bg
-                            FROM books b
-                            JOIN tags t ON b.tag_id = t.id
-                            {$searchquery}
+                                id,
+                                title,
+                                notes,
+                                date
+                            FROM suggestions
                             ORDER BY id
-                            LIMIT 100
+                            LIMIT 10
                         ";
 
                         $stmt = $conn -> prepare($sql);
-                        $stmt -> execute($params);
+                        $stmt -> execute();
 
                         foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
                     ?>
 
                     <tr>
-                        <td class="mb-nd">
-                            <a href="<?= $row->img ?>" target="_blank">
-                                <img loading="lazy" src="<?= $row->img ?>" alt="Copertina del libro">
-                            </a>
-                        </td>
+                        <td><?= $row->title ?></td>
 
-                        <td><?= $row->name ?></td>
+                        <td class="mb-limiter"><?= $row->notes ?></td>
 
-                        <td class="mb-nd"><?= $row->author ?></td>
-
-                        <td class="mb-nd">
-                            <div 
-                                style="background: #<?= $row->tag_bg ?>; color: #<?= $row->tag_color ?>"
-                                class="genre"
-                            >
-                                <?= $row->tag_name ?>
-                            </div>
-                        </td>
-
-                        <td>
-                            <?php 
-                                switch ($row->state) {
-                                    case 0: // Disponibile
-                                        echo "<div class='state free'>Disponibile</div>";
-                                        break;
-                                    case 1: // In prestito
-                                        echo "<div class='state occupied'>In prestito</div>";
-                                        break;
-                                    default:
-                                        echo "<div class='state unknown'>Sconosciuta</div>";
-                                        break;
-                                }
-                            ?>
-                        </td>
-
-                        <td class="mb-nd">
-                            <?= $row->position ?>
-                        </td>
-
-                        <td class="mb-nd"><?= str_replace("-", "/", ($row->date)) ?></td>
-                    </tr>
-
+                        <td><?= $row->date ?></td>
                     <?php
                         }
                     ?>
@@ -158,8 +120,6 @@
             </table>
         </div>
     </div>
-
-    <br><br>
 
     <?php
         include("components/footer.php")

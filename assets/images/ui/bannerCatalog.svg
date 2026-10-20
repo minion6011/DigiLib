@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-89b08bfe-b697-4905-9b32-fa7f5c725c1e" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 420 200">
+  <defs>
+    <style>
+      .uuid-0fb724d7-b7de-4ba9-9226-2749472d940a {
+        fill: #edf4fd;
+      }
+
+      .uuid-e1710cb8-a578-44f1-9698-c3a8406383b4 {
+        fill: none;
+        stroke: url(#uuid-0670cb54-12cd-403b-ab15-242f7c5f8dfc);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 5px;
+      }
+    </style>
+    <linearGradient id="uuid-0670cb54-12cd-403b-ab15-242f7c5f8dfc" data-name="Sfumatura senza nome 85" x1="377.95" y1="47.72" x2="184.91" y2="159.17" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a6d0ec"/>
+      <stop offset="0" stop-color="#a3ceeb"/>
+      <stop offset=".04" stop-color="#92c8e8"/>
+      <stop offset=".08" stop-color="#86c3e6"/>
+      <stop offset=".14" stop-color="#7fc0e5"/>
+      <stop offset=".3" stop-color="#7ec0e5"/>
+      <stop offset=".46" stop-color="#48a9db"/>
+      <stop offset=".69" stop-color="#1f9ad5"/>
+      <stop offset="1" stop-color="#0475bc"/>
+    </linearGradient>
+  </defs>
+  <g id="uuid-6ac36d22-a7e8-4f48-afa7-541e6982f615" data-name="a">
+    <path class="uuid-0fb724d7-b7de-4ba9-9226-2749472d940a" d="M420,200H0c21.07-13.07,46.63-32.04,71.47-59.09C119.44,88.66,140.14,33.02,149.44,0h270.56v200Z"/>
+  </g>
+  <g id="uuid-62b3c10a-798d-4bc7-a0a0-ee3046d5d456" data-name="b">
+    <path class="uuid-e1710cb8-a578-44f1-9698-c3a8406383b4" d="M376.58,60.27c-.06,7.01-.12,14.01-.18,21.02,7.91,3.28,15.82,6.55,23.72,9.83-2.85.94-5.7,1.89-8.54,2.83v23.07c2.85,1.08,5.7,2.16,8.54,3.24-47.29,16.21-94.58,32.42-141.86,48.63l-88.95-41.74c-.91-2.92-1.75-6.53-2.09-10.71-.67-8.05.75-14.72,2.09-19.08,29.72,13.58,59.43,27.15,89.15,40.73,47.22-15.66,94.44-31.32,141.66-46.97-7.91-3.28-15.82-6.55-23.72-9.83-39.31,12.57-78.63,25.15-117.94,37.72-21.68-9.58-43.36-19.16-65.04-28.74-5.36,1.57-13.4,3.94-24.11,7.09,10.71-3.15,18.75-5.52,24.11-7.09-.5-2.39-.91-5.17-1.06-8.27-.24-5.17.33-9.62,1.06-13.07,21.61,9.54,43.22,19.09,64.84,28.63l123.18-38.79c-22.64-9.98-45.28-19.95-67.93-29.93l-120.09,40.08"/>
+  </g>
+</svg>

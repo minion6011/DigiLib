@@ -23,9 +23,9 @@
                 Qui trovi tutti i libri disponibili nel nostro catalogo. Puoi cercare, filtrare 
                 <br> 
                 e visualizzare i dettagli di ogni titolo.
-        </p>
+            </p>
         </div>
-        <img src="assets/images/ui/banner.svg">
+        <img src="assets/images/ui/bannerCatalog.svg">
     </div>
 
     <div class="content">
@@ -158,8 +158,6 @@
             </table>
         </div>
     </div>
-
-    <br><br>
 
     <?php
         include("components/footer.php")

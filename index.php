@@ -41,7 +41,7 @@
                 </a>
             </div>
         </div>
-        <img src="assets/images/ui/banner.svg">
+        <img src="assets/images/ui/bannerHome.svg">
     </div>
 
     <div class="content">

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 420 200">
+  <defs>
+    <style>
+      .s { fill: url(#k); }
+      .t { fill: url(#c); }
+      .u { fill: url(#d); }
+      .v { fill: url(#l); }
+      .w { fill: url(#h); }
+      .x { fill: url(#o); }
+      .y { fill: url(#j); }
+      .z { fill: url(#g); }
+      .aa { fill: url(#q); }
+      .ab { fill: url(#m); }
+      .ac {
+        isolation: isolate;
+      }
+      .ad { fill: url(#e); }
+      .ae { fill: url(#i); }
+      .af { fill: url(#f); }
+      .ag { fill: url(#p); }
+      .ah { fill: url(#b); }
+      .ai { fill: url(#n); }
+      .aj {
+        fill: #edf4fd;
+      }
+      .ak {
+        fill: url(#r);
+        mix-blend-mode: multiply;
+      }
+    </style>
+    <linearGradient id="b" data-name="Sfumatura senza nome 35" x1="127.42" y1="57.76" x2="112.03" y2="57.76" gradientTransform="translate(422) scale(-1 1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#cadef2"/>
+      <stop offset=".06" stop-color="#c1daf0"/>
+      <stop offset=".17" stop-color="#a6d0ec"/>
+      <stop offset=".31" stop-color="#7ec0e5"/>
+      <stop offset=".46" stop-color="#48a9db"/>
+      <stop offset=".57" stop-color="#1f9ad5"/>
+      <stop offset=".87" stop-color="#0475bc"/>
+      <stop offset=".99" stop-color="#035b95"/>
+    </linearGradient>
+    <linearGradient id="c" data-name="Sfumatura senza nome 35" x1="103.38" y1="58.82" x2="115.43" y2="65.74" xlink:href="#b"/>
+    <linearGradient id="d" data-name="Sfumatura senza nome 35" x1="169.74" y1="27.03" x2="158.78" y2="58.69" xlink:href="#b"/>
+    <linearGradient id="e" data-name="Sfumatura senza nome 35" x1="134.93" y1="36" x2="134.93" y2="63.1" xlink:href="#b"/>
+    <linearGradient id="f" data-name="Sfumatura senza nome 35" x1="178.85" y1="72.5" x2="113.36" y2="209.97" xlink:href="#b"/>
+    <linearGradient id="g" data-name="Sfumatura senza nome 35" x1="135.05" y1="50.77" x2="191.91" y2="50.77" xlink:href="#b"/>
+    <linearGradient id="h" data-name="Sfumatura senza nome 35" x1="-379.22" y1="17.18" x2="-409.8" y2="163.31" gradientTransform="translate(713.01)" xlink:href="#b"/>
+    <linearGradient id="i" data-name="Sfumatura senza nome 35" x1="129.52" y1="70.23" x2="86.43" y2="33.13" xlink:href="#b"/>
+    <linearGradient id="j" data-name="Sfumatura senza nome 35" x1="164.47" y1="111.29" x2="164.78" y2="172.83" xlink:href="#b"/>
+    <linearGradient id="k" data-name="Sfumatura senza nome 35" x1="216.4" y1="131" x2="175.45" y2="154.45" xlink:href="#b"/>
+    <linearGradient id="l" data-name="Sfumatura senza nome 35" x1="186.92" y1="137.59" x2="140.74" y2="174.03" xlink:href="#b"/>
+    <linearGradient id="m" data-name="Sfumatura senza nome 35" x1="209.81" y1="119.49" x2="168.85" y2="142.94" xlink:href="#b"/>
+    <linearGradient id="n" data-name="Sfumatura senza nome 35" x1="178.8" y1="127.28" x2="132.61" y2="163.73" xlink:href="#b"/>
+    <linearGradient id="o" data-name="Sfumatura senza nome 35" x1="222.99" y1="142.51" x2="182.04" y2="165.96" xlink:href="#b"/>
+    <linearGradient id="p" data-name="Sfumatura senza nome 35" x1="195.05" y1="147.89" x2="148.87" y2="184.33" xlink:href="#b"/>
+    <linearGradient id="q" data-name="Sfumatura senza nome 35" x1="179.26" y1="137.44" x2="159.78" y2="161.61" xlink:href="#b"/>
+    <linearGradient id="r" data-name="Sfumatura senza nome 35" x1="160.17" y1="65.75" x2="177.15" y2="249.52" xlink:href="#b"/>
+  </defs>
+  <g class="ac">
+    <g id="a" data-name="Livello 1">
+      <path class="aj" d="M420,200H0c21.07-13.07,46.63-32.04,71.47-59.09C119.44,88.66,140.14,33.02,149.44,0h270.56v200Z"/>
+      <g>
+        <g>
+          <path class="ah" d="M308.63,32.19s1.16-8.86-10.6-7.29v65.92s11.41-43.7,10.6-58.62Z"/>
+          <path class="t" d="M287.43,62.79s17.88-9.72,21.2-30.61v64.74l-21.2-34.14Z"/>
+        </g>
+        <path class="u" d="M245.7,29.3v46.62l41.73,41.11v-54.24c-4.74-28.55-30.71-30.07-41.73-33.49Z"/>
+        <polygon class="ad" points="287.43 62.79 235.66 32.9 230.59 35.85 287.25 68.56 343.54 35.85 338.65 33.03 287.43 62.79"/>
+        <g>
+          <polygon class="af" points="229.79 141.45 286.95 174.45 286.95 67.44 230.09 34.61 229.79 141.45"/>
+          <path class="z" d="M230.09,34.61l56.86,32.84v-1.01c-4.09-2.37-49.21-28.42-56-32.34l-.85.51Z"/>
+        </g>
+        <g>
+          <polygon class="w" points="344.11 141.45 286.95 174.45 286.95 67.44 343.81 34.61 344.11 141.45"/>
+          <path class="ae" d="M343.81,34.61l-56.86,32.84v-1.01c4.09-2.37,49.21-28.42,56-32.34l.85.51Z"/>
+        </g>
+        <path class="y" d="M245.81,90.34c.02-7.46,5.3-10.46,11.79-6.72h0c6.49,3.75,11.73,12.83,11.71,20.29l-.1,36.75-23.5-13.57.1-36.75Z"/>
+        <polygon class="s" points="256.03 156.16 256.05 163.81 231.99 149.83 231.97 142.18 256.03 156.16"/>
+        <polygon class="v" points="231.97 142.18 238.62 138.34 262.68 152.32 256.03 156.16 231.97 142.18"/>
+        <polygon class="ab" points="262.66 144.68 262.68 152.32 238.62 138.34 238.59 130.69 262.66 144.68"/>
+        <polygon class="ai" points="238.59 130.69 245.25 126.85 269.31 140.83 262.66 144.68 238.59 130.69"/>
+        <polygon class="x" points="249.39 167.65 249.42 175.29 225.35 161.31 225.33 153.66 249.39 167.65"/>
+        <polygon class="ag" points="225.33 153.66 231.99 149.82 256.05 163.81 249.39 167.65 225.33 153.66"/>
+        <polygon class="aa" points="256.05 163.81 256.05 163.8 256.03 156.16 262.67 152.33 262.68 152.32 262.66 144.68 269.31 140.83 269.32 144.68 269.33 144.68 269.33 164.48 256.07 171.45 249.42 175.29 249.39 167.65 256.05 163.81"/>
+        <path class="ak" d="M255.56,87.15c5.73,2.01,9.69,10.71,9.68,16.75l-.08,29.72-15.38-8.88s-.47-25.07.09-33.41c.22-3.3,2.11-5.45,5.69-4.19Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
