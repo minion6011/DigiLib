@@ -108,6 +108,7 @@
                 Invia proposta
             </button>
         </form>
+
         <div class="books-table">
             <table>
                 <thead>
@@ -115,6 +116,7 @@
                         <th>Titolo</th>
                         <th>Note</th>
                         <th>Data</th>
+                        <th>Stato</th>
                     </tr>
                 </thead>
 
@@ -125,7 +127,8 @@
                                 id,
                                 title,
                                 notes,
-                                date
+                                date,
+                                state
                             FROM suggestions
                             ORDER BY id
                             LIMIT 10
@@ -140,9 +143,28 @@
                     <tr>
                         <td><?= $row->title ?></td>
 
-                        <td class="mb-limiter"><?= $row->notes ?></td>
+                        <td><?= $row->notes ?></td>
 
                         <td><?= $row->date ?></td>
+                    
+                        <td>
+                            <?php
+                                switch ($row->state) {
+                                    case 0: // In attesa di accettazione
+                                        echo "<div class='state occupied'>In attessa</div>";
+                                        break;
+                                    case 1: // Accettato
+                                        echo "<div class='state free'>Accettato</div>";
+                                        break;
+                                    case 2: // Rifiutato
+                                        echo "<div class='state deny'>Rifiutato</div>";
+                                        break;
+                                    default:
+                                        echo "<div class='state unknown'>Sconosciuta</div>";
+                                        break;
+                                }
+                            ?>
+                        </td>
                     <?php
                         }
                     ?>

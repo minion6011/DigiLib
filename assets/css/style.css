@@ -106,12 +106,12 @@ a {
                 border-radius: 50px;
             }
             img {
-                width: 15px;
+                width: 16px;
                 aspect-ratio: 1 / 1;
             }
         }
     }
-    @media (max-width: 1010px) {
+    @media (max-width: 550px) {
         .btns, .logo {
             display: flex;
             justify-content: center;
@@ -266,6 +266,15 @@ div.logo {
                 td {
                     & {
                         padding: 12px 15px;
+
+                        max-width: 300px;
+
+                        white-space: normal;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+
+                        -webkit-line-clamp: 2;
+                        line-clamp: 2;
                     }
                     &:first-child {
                         text-align: center;
@@ -300,6 +309,10 @@ div.logo {
         &.occupied {
             background-color: #fdf1cf;
             color: #e8ad4f;
+        }
+        &.deny {
+            background-color: #f3a5a5;
+            color: #d55252;
         }
         &.unknown {
             background-color: #e7e7e7;

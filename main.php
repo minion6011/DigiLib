@@ -39,9 +39,9 @@
         $current_url = $_SERVER['REQUEST_URI'];
         if (!loggedIn($conn, $needAdmin)) {
             if ($needAdmin)
-                header("Location: login.php?err=permission?redirect=" . urlencode($current_url));
+                header("Location: login.php?error=permission&redirect=" . urlencode($current_url));
             else
-                header("Location: login.php?redirect=" . urlencode($current_url));
+                header("Location: login.php?error=noaccount&redirect=" . urlencode($current_url));
             exit;
         }
     }

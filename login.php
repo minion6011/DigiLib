@@ -28,7 +28,10 @@
                 if (isset($_GET["error"])) {
                     switch ($_GET["error"]) {
                         case "permission":
-                            $msg = "Devi essere un admin per accedere a questa pagina";
+                            $msg = "Devi essere un admin per continuare";
+                            break;
+                        case "noaccount":
+                            $msg = "Devi usare un account per continuare";
                             break;
                         case "exist":
                             $msg = "Esiste già un account con quella email";
