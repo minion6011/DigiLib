@@ -63,9 +63,9 @@
         }
 
         if ($needAdmin && isset($_SESSION["isAdmin"]))
-            if (!$_SESSION["isAdmin"])
+            if ($_SESSION["isAdmin"] != 1) {
                 return false;
-
+            }
         return $result;
     }
 

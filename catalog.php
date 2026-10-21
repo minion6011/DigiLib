@@ -1,3 +1,6 @@
+<?php
+    require_once "main.php";
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -51,7 +54,7 @@
                         <th>Titolo</th>
                         <th class="mb-nd">Autore</th>
                         <th class="mb-nd">Genere</th>
-                        <th>Disponibilità</th>
+                        <th>Stato</th>
                         <th class="mb-nd">Posizione</th>
                         <th class="mb-nd">Rilascio</th>
                     </tr>
@@ -59,8 +62,6 @@
 
                 <tbody>
                     <?php
-                        require_once("main.php");
-
                         $params = [];
                         $searchquery = "";
 

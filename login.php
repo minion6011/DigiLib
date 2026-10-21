@@ -1,3 +1,6 @@
+<?php
+    require_once "main.php";
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -24,7 +27,6 @@
                 <p>Accedi a DigiLib</p>
             </div>
             <?php
-                require_once "main.php";
                 if (isset($_GET["error"])) {
                     switch ($_GET["error"]) {
                         case "permission":
@@ -80,7 +82,7 @@
                             exit;
                         }
 
-                        $sql = "SELECT id, password FROM users WHERE email = :email";
+                        $sql = "SELECT id, password, isAdmin FROM users WHERE email = :email";
                         $stmt = $conn -> prepare($sql);
                         $stmt -> execute([
                             "email" => $email,

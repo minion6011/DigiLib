@@ -1,0 +1,10 @@
+.content {
+    & {
+        margin: 30px;
+    }
+    @media (max-width: 1010px) {
+        & {
+            margin: 30px 15px;
+        }
+    }
+}
