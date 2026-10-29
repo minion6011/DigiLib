@@ -97,7 +97,7 @@
                                 t.color AS tag_color,
                                 t.background AS tag_bg
                             FROM books b
-                            JOIN tags t ON b.tag_id = t.id
+                            LEFT JOIN tags t ON b.tag_id = t.id
                             {$searchquery}
                             ORDER BY id
                             LIMIT 100
@@ -121,12 +121,27 @@
                         <td class="mb-nd"><?= $row->author ?></td>
 
                         <td class="mb-nd">
-                            <div 
-                                style="background: #<?= $row->tag_bg ?>; color: #<?= $row->tag_color ?>"
-                                class="genre"
-                            >
-                                <?= $row->tag_name ?>
-                            </div>
+                            <?php  
+                                if (isset($row->tag_bg) && isset($row->tag_color) && $row->tag_name) {
+                            ?>
+                                <div 
+                                    style="background: #<?= $row->tag_bg ?>; color: #<?= $row->tag_color ?>"
+                                    class="genre"
+                                >
+                                    <?= $row->tag_name ?>
+                                </div>
+                            <?php
+                                } else {
+                            ?>
+                                <div 
+                                    style="background: #e7e7e7; color: #858585"
+                                    class="genre"
+                                >
+                                    Sconosciuto
+                                </div>
+                            <?php
+                                }
+                            ?>
                         </td>
 
                         <td>
@@ -139,7 +154,7 @@
                                         echo "<div class='state occupied'>In prestito</div>";
                                         break;
                                     default:
-                                        echo "<div class='state unknown'>Sconosciuta</div>";
+                                        echo "<div class='state unknown'>Sconosciuto</div>";
                                         break;
                                 }
                             ?>

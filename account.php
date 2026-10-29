@@ -2,6 +2,40 @@
     require_once "main.php";
     requireLogin($conn, true);
 ?>
+
+<?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $method = $_POST["_method"] ?? '';
+        $type = $_POST["_type"] ?? '';
+        switch ($type) {
+            case 'book':
+                // Methods (book)
+                switch ($method) {
+                    case 'DELETE':
+                        try {
+                            if (!isset($_POST["id"]))
+                                throw new Exception("Missing ID");
+
+                            $id = $_POST["id"];
+
+                            // Remove from the DB
+                            $sql = "DELETE FROM books WHERE id = :id";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute([
+                                "id" => $id,
+                            ]);
+
+                            http_response_code(200);
+                        } catch (Exception $e) {
+                            http_response_code(400);
+                        }
+                        break;
+                }
+                break;
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -17,6 +51,10 @@
 <body>
     <?php
         include("components/navbar.php");
+    ?>
+
+    <?php
+        include("components/modals.php")
     ?>
 
     <div class="content">
@@ -90,7 +128,7 @@
                                 t.color AS tag_color,
                                 t.background AS tag_bg
                             FROM books b
-                            JOIN tags t ON b.tag_id = t.id
+                            LEFT JOIN tags t ON b.tag_id = t.id
                             {$searchquery}
                             ORDER BY id
                             LIMIT 100
@@ -114,12 +152,27 @@
                         <td class="mb-nd"><?= $row->author ?></td>
 
                         <td class="mb-nd">
-                            <div 
-                                style="background: #<?= $row->tag_bg ?>; color: #<?= $row->tag_color ?>"
-                                class="genre"
-                            >
-                                <?= $row->tag_name ?>
-                            </div>
+                            <?php  
+                                if (isset($row->tag_bg) && isset($row->tag_color) && $row->tag_name) {
+                            ?>
+                                <div 
+                                    style="background: #<?= $row->tag_bg ?>; color: #<?= $row->tag_color ?>"
+                                    class="genre"
+                                >
+                                    <?= $row->tag_name ?>
+                                </div>
+                            <?php
+                                } else {
+                            ?>
+                                <div 
+                                    style="background: #e7e7e7; color: #858585"
+                                    class="genre"
+                                >
+                                    Sconosciuto
+                                </div>
+                            <?php
+                                }
+                            ?>
                         </td>
 
                         <td>
@@ -132,7 +185,7 @@
                                         echo "<div class='state occupied'>In prestito</div>";
                                         break;
                                     default:
-                                        echo "<div class='state unknown'>Sconosciuta</div>";
+                                        echo "<div class='state unknown'>Sconosciuto</div>";
                                         break;
                                 }
                             ?>
@@ -146,7 +199,7 @@
 
                         <td>
                             <div class="action-btns"> 
-                                <button>
+                                <button onclick="openDeleteBookModal(<?= $row->id ?>)">
                                     <img src="assets/images/ui/delete.svg">
                                 </button>
                                 <button>

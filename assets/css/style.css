@@ -329,7 +329,7 @@ div.logo {
                                 border: var(--border-color) 2px solid;
                                 background-color: #fff;
                                 border-radius: 10px;
-                                padding: 2.5px;
+                                padding: 0px;
 
                                 cursor: pointer;
 

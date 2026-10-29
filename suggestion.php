@@ -160,7 +160,7 @@
                                         echo "<div class='state deny'>Rifiutato</div>";
                                         break;
                                     default:
-                                        echo "<div class='state unknown'>Sconosciuta</div>";
+                                        echo "<div class='state unknown'>Sconosciuto</div>";
                                         break;
                                 }
                             ?>
