@@ -13,7 +13,7 @@ html:has(.modals.open), body:has(.modals.open) {
     }
     &.open {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
 
         position: fixed;
@@ -49,7 +49,10 @@ html:has(.modals.open), body:has(.modals.open) {
             border-radius: 10px;
             padding: 20px;
 
-            margin: 30px 0 150px; /* Ridure il margin-bottom (150px) */
+            margin: 30px 0; /* Ridure il margin-bottom (150px) */
+
+            max-height: 80%;
+            overflow: auto;
         }
         &.open {
             display: block;
@@ -138,9 +141,14 @@ html:has(.modals.open), body:has(.modals.open) {
                         input {
                             all: unset;
                             font-size: 0.925rem;
+                            width: 100%;
                         }
                         img {
                             width: 22.5px;
+                        }
+                        i.fa {
+                            color: #989898;
+                            font-size: 22.5px;
                         }
                     }
                 }
@@ -215,6 +223,68 @@ html:has(.modals.open), body:has(.modals.open) {
                             &:not([src]), &[src=""] {
                                 display: none;
                             }
+                        }
+                    }
+                }
+                &.date {
+                    .input {
+                        & {
+                            box-sizing: border-box;
+
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            border-radius: 12.5px;
+                            border: 1px solid var(--border-color);
+                            padding: 10px 12.5px;
+
+                            width: 100%;
+                        }
+                        input {
+                            all: unset;
+                            font-size: 0.925rem;
+                            width: 100%;
+                        }
+                        input[type="date"]::-webkit-calendar-picker-indicator {
+                            display: none;
+                        }
+                        i.fa {
+                            color: #989898;
+                            font-size: 22.5px;
+                        }
+                    }
+                }
+                &.select {
+                    .input {
+                        & {
+                            box-sizing: border-box;
+
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            border-radius: 12.5px;
+                            border: 1px solid var(--border-color);
+                            padding: 10px 12.5px;
+
+                            width: 100%;
+                        }
+                        input {
+                            width: 100%;
+                        }
+                        select {
+                            background-color: #ffffff00;
+
+                            border: 0;
+                            width: 100%;
+                            height: 100%;
+
+                            font-size: 0.925rem;
+                        }
+                        i.fa {
+                            color: #989898;
+                            font-size: 22.5px;
                         }
                     }
                 }
