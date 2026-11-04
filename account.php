@@ -101,6 +101,82 @@
                             http_response_code(400);
                         }
                         break;
+                    case 'PATCH':
+                        if (!isset($_POST["id"], $_POST["title"], $_POST["author"], $_POST["date"], $_POST["state"]))
+                            throw new Exception("Missing Args");
+                        try {
+                            $img = null;
+
+                            $params = [
+                                "id" => $_POST["id"], // Sanification: filter_var($_POST["id"], FILTER_SANITIZE_NUMBER_INT)
+                                "title" => htmlspecialchars($_POST["title"], ENT_QUOTES), // Sanification: htmlspecialchars($_POST["title"], ENT_QUOTES)
+                                "author" => htmlspecialchars($_POST["author"], ENT_QUOTES),
+                                "date" => $_POST["date"],
+                                "state" => filter_var($_POST["state"], FILTER_SANITIZE_NUMBER_INT),
+                                "position" => isset($_POST["position"]) ? 
+                                    htmlspecialchars($_POST["position"], ENT_QUOTES) : null,
+                                "tag_id" => isset($_POST["tag_id"]) ? 
+                                    filter_var($_POST["tag_id"], FILTER_SANITIZE_NUMBER_INT) : null
+                            ];
+
+                            // Image Validation
+                            $imgStatus = isset($_FILES["img"]) ?
+                                validateImg($_FILES["img"], $ini["DB"]["maximagesize"]) : 1;
+
+                            switch ($imgStatus) {
+                                case 0:
+                                    // Uploads image
+                                    $imgpath = $ini["Paths"]["bookimgs"];
+                                    $ext = pathinfo($_FILES["img"]["name"], PATHINFO_EXTENSION);
+                                    $img_name = bin2hex(random_bytes(16)) . '.' . $ext; // Random name
+                                    $img = (string) $imgpath . $img_name;
+                                    $params["img"] = $img;
+
+                                    if (!move_uploaded_file($_FILES["img"]['tmp_name'], $img)) {
+                                        http_response_code(422); // Unprocessable Content
+                                        break 2;
+                                    }
+                                    // Remove Old Image
+                                    $sql = "SELECT img FROM books WHERE id = :id";
+                                    $stmt = $conn -> prepare($sql);
+                                    $stmt -> execute([
+                                        "id" => $_POST["id"],
+                                    ]);
+                                    $imgoldpath = (string) $stmt->fetch(PDO::FETCH_OBJ)->img;
+                                    if (str_starts_with($imgoldpath, (string) $ini["Paths"]["bookimgs"])) {
+                                        if (file_exists($imgoldpath)) {
+                                            unlink($imgoldpath);
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    http_response_code(431); // Request Header Fields Too Large
+                                    break 2;
+                            }
+
+
+                            $img_check = isset($img) ? ":img" : "DEFAULT";
+                            // SQL Query
+                            $sql = "
+                                UPDATE books SET 
+                                    img = $img_check,
+                                    name = :title,
+                                    author = :author,
+                                    publish_date = :date,
+                                    state = :state,
+                                    position = :position,
+                                    tag_id = :tag_id
+                                WHERE
+                                    id = :id
+                            ";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute($params);
+                            http_response_code(200);
+                        } catch (Exception $e) {
+                            echo $e;
+                            http_response_code(400);
+                        }
+                        break;     
                 }
                 break;
         }
@@ -196,6 +272,7 @@
                                 b.state,
                                 b.position,
                                 b.publish_date AS date,
+                                t.id AS tag_id,
                                 t.name AS tag_name,
                                 t.color AS tag_color,
                                 t.background AS tag_bg
@@ -274,7 +351,16 @@
                                 <button onclick="openDeleteBookModal(<?= $row->id ?>)">
                                     <img src="assets/images/ui/delete.svg">
                                 </button>
-                                <button>
+                                <button onclick="openEditBookModal(
+                                    <?= $row->id ?>,
+                                    '<?= $row->img ?>',
+                                    '<?= $row->name ?>',
+                                    '<?= $row->author ?>',
+                                    '<?= $row->date ?>',
+                                    <?= $row->state ?>,
+                                    '<?= $row->position ?>',
+                                    <?= $row->tag_id ?>
+                                )">
                                     <img src="assets/images/ui/edit.svg">
                                 </button>
                             </div>

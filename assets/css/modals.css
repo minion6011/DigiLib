@@ -216,12 +216,15 @@ html:has(.modals.open), body:has(.modals.open) {
                                 height: var(--height);
                                 width: 100%;
 
-                                object-fit: cover;
+                                object-fit: contain;
                                 object-position: center;
                             }
 
                             &:not([src]), &[src=""] {
                                 display: none;
+                            }
+                            &[src], &:not([src=""]) {
+                                background-color: #fff;
                             }
                         }
                     }
