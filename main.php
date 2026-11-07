@@ -103,4 +103,13 @@
         return 0;
     }
 
+    /**
+     * Return an hex color in the following format #ffffff -> ffffff; if the color is invalid returns 000000
+    */
+    function filterColor(string $color) {
+        $color = ltrim($color, '#');
+        $color = isset($color) ? preg_replace('/[^a-fA-F0-9]/', '', $color) : '000000';
+
+        return $color;
+    }
 ?>

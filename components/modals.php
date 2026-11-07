@@ -111,7 +111,7 @@
                     <p>Tag</p>
                     <div class="input">
                         <i class="fa fa-check-circle-o"></i>
-                        <select>
+                        <select name="tag_id">
                             <option value="" disabled selected>-- Seleziona tag --</option>
                             <option value="">Nessuno</option>
                             <?php
@@ -146,8 +146,8 @@
             <input type="hidden" name="_type" value="book">
     
             <div class="top">
-                <div class="logo" style="background-color: #c7dfff;">
-                    <img src="components/avatar.php?color=1172F4" alt="Logo">
+                <div class="logo" style="background-color: #fff1c7;">
+                    <img src="components/avatar.php?color=F4B711" alt="Logo">
                 </div>
                 <div class="text">
                     <p class="title">Modifica un libro</p>
@@ -220,7 +220,7 @@
                     <p>Tag</p>
                     <div class="input">
                         <i class="fa fa-check-circle-o"></i>
-                        <select id="edit-tag-book">
+                        <select id="edit-tag-book" name="tag_id">
                             <option value="" disabled selected>-- Seleziona tag --</option>
                             <option value="">Nessuno</option>
                             <?php
@@ -238,6 +238,147 @@
                     </div>
                 </div>
 
+            </div>
+
+            <div class="bottom">
+                <div class="buttons">
+                    <button class="confirm" type="submit">Modifica</button>
+                    <button class="cancel" type="button" onclick="closeModal()">Annulla</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Tags -->
+
+    <div class="modal" id="delete-modal-tag"> <!-- Delete Modal -->
+        <form action="account.php" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_type" value="tag">
+    
+            <div class="top">
+                <div class="logo" style="background-color: #F3A5A5;">
+                    <img src="components/avatar.php?color=fc3a3a" alt="Logo">
+                </div>
+                <div class="text">
+                    <p class="title">Rimuovi un Tag</p>
+                    <p class="description">Cancella tag e rimuovilo dai libri associati</p>
+                </div>
+                <p class="close" onclick="closeModal()">&#x2715;</p>
+            </div>
+
+            <div class="middle">
+                <input type="hidden" id="delete-id-tag" name="id" required>
+                
+                <div class="inputbox buttons">
+                    <p>Sei sicuro di volere eliminare questo tag?</p>
+                    <div class="input">
+                        <button class="delete" type="submit">Elimina</button>
+                        <button class="cancel" type="button" onclick="closeModal()">Annulla</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="create-modal-tag"> <!-- Create Modal -->
+        <form action="account.php" method="POST" id="create-form-tag">
+            <input type="hidden" name="_method" value="POST">
+            <input type="hidden" name="_type" value="tag">
+    
+            <div class="top">
+                <div class="logo" style="background-color: #c7dfff;">
+                    <img src="components/avatar.php?color=1172F4" alt="Logo">
+                </div>
+                <div class="text">
+                    <p class="title">Crea un tag</p>
+                    <p class="description">Inserisci le informazioni per creare un tag</p>
+                </div>
+                <p class="close" onclick="closeModal()">&#x2715;</p>
+            </div>
+
+            <div class="middle">
+                <div class="inputbox text">
+                    <p>Nome Tag*</p>
+                    <div class="input">
+                        <img src="components/avatar.php?color=989898" alt="Logo">
+                        <input type="text" minlength="1" placeholder="Inserire il nome del tag" name="name" required>
+                    </div>
+                </div>
+                <div class="inputbox multiple">
+                    <p>Colori Tag*</p>
+                    <div class="inputs">
+                        <div class="inputbox color">
+                            <p>Colore Testo</p>
+                            <div class="input">
+                                <input type="color" value="#1673fe" name="color" required>
+                            </div>
+                        </div>
+
+                        <div class="inputbox color">
+                            <p>Colore Sfondo</p>
+                            <div class="input">
+                                <input type="color" value="#eaf4fd" name="background" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom">
+                <div class="buttons">
+                    <button class="confirm" type="submit">Aggiungi</button>
+                    <button class="cancel" type="button" onclick="closeModal()">Annulla</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="edit-modal-tag"> <!-- Edit Modal -->
+        <form action="account.php" method="POST" id="edit-form-tag">
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="_type" value="tag">
+    
+            <div class="top">
+                <div class="logo" style="background-color: #c7dfff;">
+                    <img src="components/avatar.php?color=1172F4" alt="Logo">
+                </div>
+                <div class="text">
+                    <p class="title">Modifica un tag</p>
+                    <p class="description">Modifica le informazioni di un tag</p>
+                </div>
+                <p class="close" onclick="closeModal()">&#x2715;</p>
+            </div>
+
+            <div class="middle">
+                <input type="hidden" id="edit-id-tag" name="id" required>
+                
+                <div class="inputbox text">
+                    <p>Nome Tag*</p>
+                    <div class="input">
+                        <img src="components/avatar.php?color=989898" alt="Logo">
+                        <input type="text" minlength="1" placeholder="Inserire il nome del tag" id="edit-name-tag" name="name" required>
+                    </div>
+                </div>
+                <div class="inputbox multiple">
+                    <p>Colori Tag*</p>
+                    <div class="inputs">
+                        <div class="inputbox color">
+                            <p>Colore Testo</p>
+                            <div class="input">
+                                <input type="color" value="#1673fe" name="color" id="edit-color-tag" required>
+                            </div>
+                        </div>
+
+                        <div class="inputbox color">
+                            <p>Colore Sfondo</p>
+                            <div class="input">
+                                <input type="color" value="#eaf4fd" name="background" id="edit-background-tag" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="bottom">

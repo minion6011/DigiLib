@@ -1,12 +1,32 @@
 const modalsContainer = document.getElementById("modals-cnt");
 
-const deleteModal = {
+
+const deleteTagModal = {
+    element: document.getElementById("delete-modal-tag"),
+
+    id: document.getElementById("delete-id-tag")
+}
+const createTagModal = {
+    form: document.getElementById("create-form-tag"),
+    element: document.getElementById("create-modal-tag"),
+}
+const editTagModal = {
+    form: document.getElementById("edit-form-tag"),
+    element: document.getElementById("edit-modal-tag"),
+
+    id: document.getElementById("edit-id-tag"),
+
+    name: document.getElementById("edit-name-tag"),
+    color: document.getElementById("edit-color-tag"),
+    background: document.getElementById("edit-background-tag"),
+}
+
+const deleteBookModal = {
     element: document.getElementById("delete-modal-book"),
 
     id: document.getElementById("delete-id-book"),
 }
-
-const createModal = {
+const createBookModal = {
     form: document.getElementById("create-form-book"),
     element: document.getElementById("create-modal-book"),
 
@@ -17,8 +37,7 @@ const createModal = {
     date_ico: document.getElementById("create-date-book-ico"),
     date: document.getElementById("create-date-book"),
 }
-
-const editModal = {
+const editBookModal = {
     form: document.getElementById("edit-form-book"),
     element: document.getElementById("edit-modal-book"),
 
@@ -57,6 +76,39 @@ HTMLSelectElement.prototype.contains = function( value ) {
 
 let currentModal = null;
 
+/**
+ * Opens the edit tag modal
+ * @param {int} id Tag id
+ * @param {string} name Tag name
+ * @param {string} color Tag text color (Hex)
+ * @param {string} background Tag background color (Hex)
+ */
+function openEditTagModal(id, name, color, background) {
+    //editTagModal.form.reset(); // Non necessario, tutti gli elementi vengono sovrascritti
+    openModalDefault(editTagModal.element);
+    editTagModal.id.value = id;
+    editTagModal.name.value = name;
+    editTagModal.color.value = color;
+    editTagModal.background.value = background;
+}
+
+/**
+ * Opens the create tag modal
+ */
+function openCreateTagModal() {
+    createTagModal.form.reset();
+    openModalDefault(createTagModal.element);
+}
+
+/**
+ * Opens the delete tag modal
+ * @param {int} id Tag Id
+ */
+function openDeleteTagModal(id) {
+    openModalDefault(deleteTagModal.element);
+    deleteTagModal.id.value = id;
+}
+
 
 /**
  * Opens the create book modal
@@ -70,44 +122,42 @@ let currentModal = null;
  * @param {int} tag
  */
 function openEditBookModal(id, img, title, author, date, state, position, tag) {
-    editModal.form.reset();
-    openModalDefault(editModal.element);
+    editBookModal.form.reset();
+    openModalDefault(editBookModal.element);
     // Set values
-    editModal.id.value = id;
-    editModal.title.value = title;
-    editModal.author.value = author;
-    editModal.date.value = date;
-    if (editModal.state.contains(state))
-        editModal.state.value = state;
+    editBookModal.id.value = id;
+    editBookModal.title.value = title;
+    editBookModal.author.value = author;
+    editBookModal.date.value = date;
+    if (editBookModal.state.contains(state))
+        editBookModal.state.value = state;
     if (position != "//") // "//" è il valore di default
-        editModal.position.value = position;
-    if (editModal.tag.contains(tag))
-        editModal.tag.value = tag;
+        editBookModal.position.value = position;
+    if (editBookModal.tag.contains(tag))
+        editBookModal.tag.value = tag;
     // Clears Image Input && Sets Old Image Url
-    editModal.img.src = img;
-    editModal.img_input.value = "";
+    editBookModal.img.src = img;
+    editBookModal.img_input.value = "";
 }
-
 
 /**
  * Opens the create book modal
  */
 function openCreateBookModal() {
-    createModal.form.reset();
-    openModalDefault(createModal.element);
+    createBookModal.form.reset();
+    openModalDefault(createBookModal.element);
     // Clears Image Input
-    createModal.img.src = "";
-    createModal.img_input.value = "";
+    createBookModal.img.src = "";
+    createBookModal.img_input.value = "";
 }
-
 
 /**
  * Opens the delete book modal
  * @param {int} id Book Id
  */
 function openDeleteBookModal(id) {
-    openModalDefault(deleteModal.element);
-    deleteModal.id.value = id;
+    openModalDefault(deleteBookModal.element);
+    deleteBookModal.id.value = id;
 }
 
 
@@ -137,41 +187,41 @@ function closeModal() {
 
 // Events
 // Create Modal
-createModal.img_container.addEventListener("click", () => {
-    createModal.img_input.click();
+createBookModal.img_container.addEventListener("click", () => {
+    createBookModal.img_input.click();
 });
-createModal.img_input.addEventListener("change", () => {
-    const file = createModal.img_input.files[0];
+createBookModal.img_input.addEventListener("change", () => {
+    const file = createBookModal.img_input.files[0];
     if (file == undefined)
         return
 
     const reader = new FileReader();
     reader.onload = (e) => {
-        createModal.img.src = e.target.result;
+        createBookModal.img.src = e.target.result;
     }
     reader.readAsDataURL(file);
 });
 
-createModal.date_ico.addEventListener("click", () => {
-    createModal.date.showPicker();
+createBookModal.date_ico.addEventListener("click", () => {
+    createBookModal.date.showPicker();
 })
 
 // Edit Modal
-editModal.img_container.addEventListener("click", () => {
-    editModal.img_input.click();
+editBookModal.img_container.addEventListener("click", () => {
+    editBookModal.img_input.click();
 });
-editModal.img_input.addEventListener("change", () => {
-    const file = editModal.img_input.files[0];
+editBookModal.img_input.addEventListener("change", () => {
+    const file = editBookModal.img_input.files[0];
     if (file == undefined)
         return
 
     const reader = new FileReader();
     reader.onload = (e) => {
-        editModal.img.src = e.target.result;
+        editBookModal.img.src = e.target.result;
     }
     reader.readAsDataURL(file);
 });
 
-editModal.date_ico.addEventListener("click", () => {
-    editModal.date.showPicker();
+editBookModal.date_ico.addEventListener("click", () => {
+    editBookModal.date.showPicker();
 })

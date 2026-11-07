@@ -108,7 +108,7 @@
                             $img = null;
 
                             $params = [
-                                "id" => $_POST["id"], // Sanification: filter_var($_POST["id"], FILTER_SANITIZE_NUMBER_INT)
+                                "id" => filter_var($_POST["id"], FILTER_SANITIZE_NUMBER_INT), // Sanification: filter_var($_POST["id"], FILTER_SANITIZE_NUMBER_INT)
                                 "title" => htmlspecialchars($_POST["title"], ENT_QUOTES), // Sanification: htmlspecialchars($_POST["title"], ENT_QUOTES)
                                 "author" => htmlspecialchars($_POST["author"], ENT_QUOTES),
                                 "date" => $_POST["date"],
@@ -179,6 +179,77 @@
                         break;     
                 }
                 break;
+            case 'tag':
+                switch ($method) {
+                    case 'POST':
+                        if (!isset($_POST["name"], $_POST["color"], $_POST["background"]))
+                            throw new Exception("Missing Args");
+                        try {
+                            $color = filterColor($_POST["color"]);
+                            $background = filterColor($_POST["background"]);
+                            // SQL Query
+                            $sql = "INSERT INTO tags (name, color, background) VALUES (:name, :color, :background)";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute([
+                                "name" => htmlspecialchars($_POST["name"], ENT_QUOTES), // Sanification: htmlspecialchars($_POST["name"], ENT_QUOTES)
+                                "color" => $color,
+                                "background" => $background,
+                            ]);
+                            http_response_code(200);
+                        } catch (Exception $e) {
+                            echo $e;
+                            http_response_code(400);
+                        }
+                        break;
+                    case 'DELETE':
+                        try {
+                            if (!isset($_POST["id"]))
+                                throw new Exception("Missing Args");
+
+                            $id = $_POST["id"];
+
+                            // Remove from the DB
+                            $sql = "DELETE FROM tags WHERE id = :id";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute([
+                                "id" => $id,
+                            ]);
+                            
+                            http_response_code(200);
+                        } catch (Exception $e) {
+                            http_response_code(400);
+                        }
+                        break;
+                    case 'PATCH':
+                        if (!isset($_POST["id"], $_POST["name"], $_POST["color"], $_POST["background"]))
+                            throw new Exception("Missing Args");
+                        try {
+                            $color = filterColor($_POST["color"]);
+                            $background = filterColor($_POST["background"]);
+                            // SQL Query
+                            $sql = "
+                                UPDATE tags SET
+                                    id = :id,
+                                    name = :name,
+                                    color = :color,
+                                    background = :background
+                                WHERE
+                                    id = :id
+                            ";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute([
+                                "id" => filter_var($_POST["id"], FILTER_SANITIZE_NUMBER_INT),
+                                "name" => htmlspecialchars($_POST["name"], ENT_QUOTES), // Sanification: htmlspecialchars($_POST["name"], ENT_QUOTES)
+                                "color" => $color,
+                                "background" => $background,
+                            ]);
+                            http_response_code(200);
+                        } catch (Exception $e) {
+                            echo $e;
+                            http_response_code(400);
+                        }
+                        break;
+                }
         }
         header("Location: account.php");
     }
@@ -206,8 +277,7 @@
     ?>
 
     <div class="content">
-
-        <div class="books-table">
+        <div class="custom-table">
             <form class="search-bar">
                 <div class="input">
                     <button type="submit">
@@ -228,7 +298,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="mb-nd">Copertina</th>
+                        <th class="mb-nd center">Copertina</th>
                         <th>Titolo</th>
                         <th class="mb-nd">Autore</th>
                         <th class="mb-nd">Genere</th>
@@ -290,7 +360,7 @@
                     ?>
 
                     <tr>
-                        <td class="mb-nd">
+                        <td class="mb-nd center">
                             <a href="<?= $row->img ?>" target="_blank">
                                 <img loading="lazy" src="<?= $row->img ?>" alt="Copertina del libro">
                             </a>
@@ -360,6 +430,80 @@
                                     <?= $row->state ?>,
                                     '<?= $row->position ?>',
                                     <?= $row->tag_id ?>
+                                )">
+                                    <img src="assets/images/ui/edit.svg">
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <br><br>
+
+        <div class="custom-table tags">
+            <div class="msg-box">
+                <p class="message">
+                    Clicca per aggiungere un tag...
+                </p>
+
+                <button type="button" class="add" onclick="openCreateTagModal()">
+                    <img src="assets/images/ui/add.svg">
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tag</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php
+                        $sql = "
+                            SELECT
+                                id,
+                                name,
+                                color,
+                                background
+                            FROM tags
+                            ORDER BY id
+                            LIMIT 100
+                        ";
+
+                        $stmt = $conn -> prepare($sql);
+                        $stmt -> execute($params);
+
+                        foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
+                    ?>
+
+                    <tr>
+                        <td>
+                            <div 
+                                style="background: #<?= $row->background ?>; color: #<?= $row->color ?>"
+                                class="genre"
+                            >
+                                <?= $row->name ?>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="action-btns"> 
+                                <button onclick="openDeleteTagModal(<?= $row->id ?>)">
+                                    <img src="assets/images/ui/delete.svg">
+                                </button>
+                                <button onclick="openEditTagModal(
+                                    <?= $row->id ?>,
+                                    '<?= $row->name ?>',
+                                    '#<?= $row->color ?>',
+                                    '#<?= $row->background ?>'
                                 )">
                                     <img src="assets/images/ui/edit.svg">
                                 </button>

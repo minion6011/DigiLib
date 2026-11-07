@@ -32,7 +32,7 @@
     </div>
 
     <div class="content">
-        <div class="books-table">
+        <div class="custom-table">
             <form class="search-bar">
                 <div class="input">
                     <button type="submit">
@@ -50,7 +50,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="mb-nd">Copertina</th>
+                        <th class="mb-nd center">Copertina</th>
                         <th>Titolo</th>
                         <th class="mb-nd">Autore</th>
                         <th class="mb-nd">Genere</th>
@@ -110,7 +110,7 @@
                     ?>
 
                     <tr>
-                        <td class="mb-nd">
+                        <td class="mb-nd center">
                             <a href="<?= $row->img ?>" target="_blank">
                                 <img loading="lazy" src="<?= $row->img ?>" alt="Copertina del libro">
                             </a>

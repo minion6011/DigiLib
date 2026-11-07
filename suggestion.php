@@ -109,7 +109,7 @@
             </button>
         </form>
 
-        <div class="books-table">
+        <div class="custom-table">
             <table>
                 <thead>
                     <tr>
@@ -141,7 +141,7 @@
                     ?>
 
                     <tr>
-                        <td><?= $row->title ?></td>
+                        <td><b><?= $row->title ?></b></td>
 
                         <td><?= $row->notes ?></td>
 
