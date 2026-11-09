@@ -1,0 +1,19 @@
+[DB]
+servername = "ip"
+dbname  = "name"
+
+username = "username"
+password = "psw"
+
+maximagesize = 20971520
+
+passwordHash = "2y"
+
+[Paths]
+bookimgs = "path/"
+                
+[Support]
+email = "email@support"
+
+[Dashboard]
+showUnreviewedSuggestion = true
