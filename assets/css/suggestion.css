@@ -224,15 +224,4 @@
             }
         }
     }
-    .custom-table {
-        & {
-            width: max-content;
-            margin: 0 auto;
-        }
-        @media (max-width: 1010px) {
-            & {
-                display: none;
-            }
-        }
-    }
 }

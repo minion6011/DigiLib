@@ -1,10 +1,23 @@
 const modalsContainer = document.getElementById("modals-cnt");
 
+const deleteSuggModal = {
+    element: document.getElementById("delete-modal-sugg"),
+
+    id: document.getElementById("delete-id-sugg"),
+}
+const editSuggModal = {
+    element: document.getElementById("edit-modal-sugg"),
+
+    form: document.getElementById("edit-form-sugg"),
+
+    id: document.getElementById("edit-id-sugg"),
+    state: document.getElementById("edit-state-sugg"),
+}
 
 const deleteTagModal = {
     element: document.getElementById("delete-modal-tag"),
 
-    id: document.getElementById("delete-id-tag")
+    id: document.getElementById("delete-id-tag"),
 }
 const createTagModal = {
     form: document.getElementById("create-form-tag"),
@@ -76,6 +89,32 @@ HTMLSelectElement.prototype.contains = function( value ) {
 
 let currentModal = null;
 
+// - Suggestions
+
+/**
+ * Opens the edit suggestion modal
+ * @param {int} id Suggestion Id
+ * @param {int} state Suggestion State
+ */
+function openEditSuggModal(id, state) {
+    editSuggModal.form.reset();
+    openModalDefault(editSuggModal.element);
+    editSuggModal.id.value = id;
+    if (editSuggModal.state.contains(state))
+        editSuggModal.state.value = state;
+}
+
+/**
+ * Opens the delete suggestion modal
+ * @param {int} id Suggestion Id
+ */
+function openDeleteSuggModal(id) {
+    openModalDefault(deleteSuggModal.element);
+    deleteSuggModal.id.value = id;
+}
+
+// - Tags
+
 /**
  * Opens the edit tag modal
  * @param {int} id Tag id
@@ -109,6 +148,7 @@ function openDeleteTagModal(id) {
     deleteTagModal.id.value = id;
 }
 
+// - Books
 
 /**
  * Opens the create book modal

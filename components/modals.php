@@ -341,8 +341,8 @@
             <input type="hidden" name="_type" value="tag">
     
             <div class="top">
-                <div class="logo" style="background-color: #c7dfff;">
-                    <img src="components/avatar.php?color=1172F4" alt="Logo">
+                <div class="logo" style="background-color: #fff1c7;">
+                    <img src="components/avatar.php?color=F4B711" alt="Logo">
                 </div>
                 <div class="text">
                     <p class="title">Modifica un tag</p>
@@ -377,6 +377,80 @@
                                 <input type="color" value="#eaf4fd" name="background" id="edit-background-tag" required>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom">
+                <div class="buttons">
+                    <button class="confirm" type="submit">Modifica</button>
+                    <button class="cancel" type="button" onclick="closeModal()">Annulla</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Suggestion --> 
+    <div class="modal" id="delete-modal-sugg"> <!-- Delete Modal -->
+        <form action="account.php" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_type" value="suggestion">
+    
+            <div class="top">
+                <div class="logo" style="background-color: #F3A5A5;">
+                    <img src="components/avatar.php?color=fc3a3a" alt="Logo">
+                </div>
+                <div class="text">
+                    <p class="title">Rimuovi un suggerimento</p>
+                    <p class="description">Cancella un suggerimento</p>
+                </div>
+                <p class="close" onclick="closeModal()">&#x2715;</p>
+            </div>
+
+            <div class="middle">
+                <input type="hidden" id="delete-id-sugg" name="id" required>
+                
+                <div class="inputbox buttons">
+                    <p>Sei sicuro di volere eliminare questo suggerimento?</p>
+                    <div class="input">
+                        <button class="delete" type="submit">Elimina</button>
+                        <button class="cancel" type="button" onclick="closeModal()">Annulla</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="edit-modal-sugg"> <!-- Edit Modal -->
+        <form action="account.php" method="POST" id="edit-form-sugg">
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="_type" value="suggestion">
+    
+            <div class="top">
+                <div class="logo" style="background-color: #fff1c7;">
+                    <img src="components/avatar.php?color=F4B711" alt="Logo">
+                </div>
+                <div class="text">
+                    <p class="title">Revisiona un suggerimento</p>
+                    <p class="description">Modifica lo stato di un suggerimento</p>
+                </div>
+                <p class="close" onclick="closeModal()">&#x2715;</p>
+            </div>
+
+            <div class="middle">
+                <input type="hidden" id="edit-id-sugg" name="id" required>
+
+                <div class="inputbox select">
+                    <p>Stato*</p>
+                    <div class="input">
+                        <i class="fa fa-check-circle-o"></i>
+                        <select name="state" required id="edit-state-sugg">
+                            <option value="" disabled selected>-- Seleziona stato --</option>
+                            <option value="0">In attesa</option>
+                            <option value="1">Approvato</option>
+                            <option value="2">Rifiutato</option>
+                        </select>
                     </div>
                 </div>
             </div>

@@ -109,19 +109,55 @@
             </button>
         </form>
 
-        <div class="custom-table">
+        <div class="custom-table suggestion">
+            <form class="search-bar">
+                <div class="input">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <input name="search_sug" placeholder="Cerca per titolo, note...">
+                </div>
+                <select name="searchtype_sug">
+                    <option value="name">Titolo</option>
+                    <option value="notes">Note</option>
+                    <option value="date">Data</option>
+                </select>
+            </form>
+
             <table>
                 <thead>
                     <tr>
                         <th>Titolo</th>
-                        <th>Note</th>
-                        <th>Data</th>
+                        <th class="mb-nd">Note</th>
+                        <th class="mb-nd">Data</th>
                         <th>Stato</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <?php
+                        $params = [];
+                        $searchquery = "";
+
+                        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                            if (isset($_GET["searchtype_sug"]) && isset($_GET["search_sug"])) {
+                                switch ($_GET["searchtype_sug"]) {
+                                    case "name":
+                                        $searchquery = "WHERE title LIKE :search";
+                                        break;
+                                    case "notes":
+                                        $searchquery = "WHERE notes LIKE :search";
+                                        break;
+                                    case "date":
+                                        $searchquery = "WHERE date LIKE :search";
+                                        break;
+                                }
+
+                                if ($searchquery != "")
+                                    $params[':search'] = '%' . $_GET['search_sug'] . '%';
+                            }
+                        }
+
                         $sql = "
                             SELECT
                                 id,
@@ -130,12 +166,13 @@
                                 date,
                                 state
                             FROM suggestions
-                            ORDER BY id
+                            {$searchquery}
+                            ORDER BY id DESC
                             LIMIT 10
                         ";
 
                         $stmt = $conn -> prepare($sql);
-                        $stmt -> execute();
+                        $stmt -> execute($params);
 
                         foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
                     ?>
@@ -143,9 +180,9 @@
                     <tr>
                         <td><b><?= $row->title ?></b></td>
 
-                        <td><?= $row->notes ?></td>
+                        <td class="mb-nd"><?= $row->notes ?></td>
 
-                        <td><?= $row->date ?></td>
+                        <td class="mb-nd"><?= $row->date ?></td>
                     
                         <td>
                             <?php

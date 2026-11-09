@@ -97,7 +97,7 @@
                             $stmt -> execute($params);
                             http_response_code(200);
                         } catch (Exception $e) {
-                            echo $e;
+                            //echo $e;
                             http_response_code(400);
                         }
                         break;
@@ -173,7 +173,7 @@
                             $stmt -> execute($params);
                             http_response_code(200);
                         } catch (Exception $e) {
-                            echo $e;
+                            //echo $e;
                             http_response_code(400);
                         }
                         break;     
@@ -185,6 +185,16 @@
                         if (!isset($_POST["name"], $_POST["color"], $_POST["background"]))
                             throw new Exception("Missing Args");
                         try {
+                            // Max Elements controlls
+                            $sql = "SELECT COUNT(*) FROM tags;";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute();
+                            $tagN = $stmt->fetchColumn();
+                            if ($tagN > 100) {
+                                http_response_code(507);  // Insufficient Storage
+                                break 2;
+                            }
+                            // Color filter
                             $color = filterColor($_POST["color"]);
                             $background = filterColor($_POST["background"]);
                             // SQL Query
@@ -197,7 +207,7 @@
                             ]);
                             http_response_code(200);
                         } catch (Exception $e) {
-                            echo $e;
+                            //echo $e;
                             http_response_code(400);
                         }
                         break;
@@ -245,13 +255,57 @@
                             ]);
                             http_response_code(200);
                         } catch (Exception $e) {
-                            echo $e;
+                            //echo $e;
+                            http_response_code(400);
+                        }
+                        break;
+                }
+            case 'suggestion':
+                switch ($method) {
+                    case 'DELETE':
+                        try {
+                            if (!isset($_POST["id"]))
+                                throw new Exception("Missing Args");
+
+                            $id = $_POST["id"];
+
+                            // Remove from the DB
+                            $sql = "DELETE FROM suggestions WHERE id = :id";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute([
+                                "id" => $id,
+                            ]);
+                            
+                            http_response_code(200);
+                        } catch (Exception $e) {
+                            http_response_code(400);
+                        }
+                        break;
+                    case 'PATCH':
+                        if (!isset($_POST["id"], $_POST["state"]))
+                            throw new Exception("Missing Args");
+                        try {
+                            // SQL Query
+                            $sql = "
+                                UPDATE suggestions SET
+                                    state = :state
+                                WHERE
+                                    id = :id
+                            ";
+                            $stmt = $conn -> prepare($sql);
+                            $stmt -> execute([
+                                "id" => filter_var($_POST["id"], FILTER_SANITIZE_NUMBER_INT),
+                                "state" => filter_var($_POST["state"], FILTER_SANITIZE_NUMBER_INT),
+                            ]);
+                            http_response_code(200);
+                        } catch (Exception $e) {
+                            //echo $e;
                             http_response_code(400);
                         }
                         break;
                 }
         }
-        header("Location: account.php");
+        header("Location: account.php"); // Reset request
     }
 ?>
 
@@ -517,6 +571,125 @@
                 </tbody>
             </table>
         </div>
+
+        <br><br>
+
+        <div class="custom-table suggestion">
+            <form class="search-bar">
+                <div class="input">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <input name="search_sug" placeholder="Cerca per titolo, note...">
+                </div>
+                <select name="searchtype_sug">
+                    <option value="name">Titolo</option>
+                    <option value="notes">Note</option>
+                    <option value="date">Data</option>
+                </select>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titolo</th>
+                        <th class="mb-nd">Note</th>
+                        <th class="mb-nd">Data</th>
+                        <th>Stato</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php
+                        $params = [];
+                        $searchquery = "";
+
+                        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                            if (isset($_GET["searchtype_sug"]) && isset($_GET["search_sug"])) {
+                                switch ($_GET["searchtype_sug"]) {
+                                    case "name":
+                                        $searchquery = "WHERE title LIKE :search";
+                                        break;
+                                    case "notes":
+                                        $searchquery = "WHERE notes LIKE :search";
+                                        break;
+                                    case "date":
+                                        $searchquery = "WHERE date LIKE :search";
+                                        break;
+                                }
+
+                                if ($searchquery != "")
+                                    $params[':search'] = '%' . $_GET['search_sug'] . '%';
+                            }
+                        }
+
+                        $sql = "
+                            SELECT
+                                id,
+                                title,
+                                notes,
+                                date,
+                                state
+                            FROM suggestions
+                            {$searchquery}
+                            ORDER BY id DESC
+                            LIMIT 10
+                        ";
+
+                        $stmt = $conn -> prepare($sql);
+                        $stmt -> execute($params);
+
+                        foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
+                            // Skips unreviewed suggestions
+                            if (in_array($row->state, [1, 2]) && (bool) !$ini["Dashboard"]["showUnreviewedSuggestion"])
+                                continue;
+                    ?>
+
+                    <tr>
+                        <td><b><?= $row->title ?></b></td>
+
+                        <td class="mb-nd"><?= $row->notes ?></td>
+
+                        <td class="mb-nd"><?= $row->date ?></td>
+                    
+                        <td>
+                            <?php
+                                switch ($row->state) {
+                                    case 0: // In attesa di accettazione
+                                        echo "<div class='state occupied'>In attessa</div>";
+                                        break;
+                                    case 1: // Accettato
+                                        echo "<div class='state free'>Accettato</div>";
+                                        break;
+                                    case 2: // Rifiutato
+                                        echo "<div class='state deny'>Rifiutato</div>";
+                                        break;
+                                    default:
+                                        echo "<div class='state unknown'>Sconosciuto</div>";
+                                        break;
+                                }
+                            ?>
+                        </td>
+
+                        <td>
+                            <div class="action-btns"> 
+                                <button onclick="openDeleteSuggModal(<?= $row->id ?>)">
+                                    <img src="assets/images/ui/delete.svg">
+                                </button>
+                                <button onclick="openEditSuggModal(<?= $row->id ?>, <?= $row->state ?>)">
+                                    <img src="assets/images/ui/edit.svg">
+                                </button>
+                            </div>
+                        </td>
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <br><br>
 
     </div>
 

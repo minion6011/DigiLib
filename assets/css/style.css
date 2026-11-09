@@ -183,6 +183,18 @@ div.logo {
 
             overflow: auto;
         }
+        &.suggestion {
+            & {
+                min-width: 75%;
+                width: max-content;
+                margin: 0 auto;
+            }
+            @media (max-width: 550px) {
+                & {
+                    width: 100%;
+                }
+            }
+        }
 
         .search-bar {
             & {
