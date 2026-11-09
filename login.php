@@ -105,6 +105,18 @@
                         $perm = ($row -> isAdmin) == 1;
                         break;
                     case "register":
+                        if (!str_contains($email, "@")) {
+                            header("Location: login.php?error=invalid");
+                            exit;
+                        }
+                        
+                        $domain = explode($email, '@')[1];
+                        if ($domain == '' || !checkdnsrr($domain)) {
+                            header("Location: login.php?error=invalid");
+                            exit;
+                        }
+                        
+
                         try {
                             $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
                             $stmt = $conn -> prepare($sql);
