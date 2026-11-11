@@ -99,7 +99,7 @@
                             FROM books b
                             LEFT JOIN tags t ON b.tag_id = t.id
                             {$searchquery}
-                            ORDER BY id
+                            ORDER BY id DESC
                             LIMIT 100
                         ";
 

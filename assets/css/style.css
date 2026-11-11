@@ -261,7 +261,6 @@ div.logo {
                 border-collapse: separate;
                 border-spacing: 0;
                 border-radius: 10px;
-                overflow: hidden;
 
                 font-family: 'Montserrat', sans-serif;
                 border: var(--border-color) 2px solid;
@@ -276,6 +275,13 @@ div.logo {
             tbody tr:not(:last-child) td {
                 border-bottom: var(--border-color) 2px solid;
             }
+            
+            thead, tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+
             thead {
                 th {
                     & {
@@ -299,6 +305,11 @@ div.logo {
                 }
             }
             tbody {
+                & {
+                    display: block;
+                    max-height: 400px;
+                    overflow-y: scroll;
+                }
                 td {
                     & {
                         padding: 12px 15px;
