@@ -7,8 +7,6 @@ password = "psw"
 
 maximagesize = 20971520
 
-passwordHash = "2y"
-
 [Paths]
 bookimgs = "path/"
                 

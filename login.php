@@ -110,8 +110,10 @@
                             exit;
                         }
                         
-                        $domain = explode($email, '@')[1];
-                        if ($domain == '' || !checkdnsrr($domain)) {
+                        $parts = explode('@', $email);
+                        $domain = $parts[1] ?? '';
+
+                        if ($domain == '' || !checkdnsrr($domain, 'MX') && !checkdnsrr($domain, 'A')) {
                             header("Location: login.php?error=invalid");
                             exit;
                         }
@@ -122,7 +124,7 @@
                             $stmt = $conn -> prepare($sql);
                             $stmt -> execute([
                                 "email" => $email,
-                                "password" => password_hash($password, (string) $ini["DB"]["passwordHash"]) // https://bcrypt-generator.com/
+                                "password" => password_hash($password, PASSWORD_DEFAULT) // https://bcrypt-generator.com/
                             ]);
                             //$id = $stmt -> fetch(PDO::FETCH_OBJ) -> id;
                             $id = $conn -> lastInsertId();
