@@ -528,7 +528,7 @@
                                 color,
                                 background
                             FROM tags
-                            ORDER BY id
+                            ORDER BY id DESC
                             LIMIT 100
                         ";
 

@@ -186,7 +186,7 @@ div.logo {
         &.suggestion {
             & {
                 min-width: 75%;
-                width: max-content;
+                max-width: max-content;
                 margin: 0 auto;
             }
             @media (max-width: 550px) {
