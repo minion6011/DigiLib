@@ -8,7 +8,17 @@
             <a href="https://github.com/minion6011" target="_blank" rel="noopener noreferrer">
                 <i class="fa fa-github fa-3"></i>
             </a>
-        </div>
+            <?php
+                require_once "main.php";
+                
+                if (loggedIn($conn, false))
+                    echo "
+                    <a href='logout.php' class='signout'>
+                        <i class='fa fa-sign-out'></i>
+                    </a>
+                    ";
+            ?>
+            </div>
     </div>
     <hr>
     <p class="copyright">

@@ -57,7 +57,7 @@
         
         $result = (bool) $stmt->fetchColumn();
 
-        if (!$result) {// reset
+        if (!$result) { // reset
             unset($_SESSION['user_id']);
             unset($_SESSION['isAdmin']);
         }

@@ -472,6 +472,10 @@ div.logo {
 
             cursor: pointer;
         }
+
+        .signout {
+            margin-left: 12.5px;
+        }
     }
 
     hr {
