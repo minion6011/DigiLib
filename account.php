@@ -260,6 +260,7 @@
                         }
                         break;
                 }
+                break;
             case 'suggestion':
                 switch ($method) {
                     case 'DELETE':
@@ -533,7 +534,7 @@
                         ";
 
                         $stmt = $conn -> prepare($sql);
-                        $stmt -> execute($params);
+                        $stmt -> execute();
 
                         foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
                     ?>

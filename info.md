@@ -1,15 +1,4 @@
 # DigiLib - Gestionale libreria
-Web App scritta in **PHP** che utilizza un DB in MariaDB.
-
-L'app permette dal lato utente di:
-- Visuallizare i libri (attraverso il catalogo) della biblioteca.
-- Suggerire nuovi libri **account richiesto*.
-
-L'app permette dal lato del Admin/Gestore di:
-- Aggiungere, modificare e eliminare libri dal DB
-    - A ogni libro si possono aggiungere dei tag tramite appositi menù
-- Rimuovere, approvare o rifiutare i suggerimenti
-
 
 # Informazioni tecniche
 
@@ -38,6 +27,8 @@ L'app permette dal lato del Admin/Gestore di:
 
 ## Know Issues
 > Non è presente un sistema integrato di ratelimit
+
+> In caso di inserimento manuale di url e di modifica dal DB verrà messa l'icona di default
 
 ## Tabelle DB
 ### Books

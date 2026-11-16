@@ -7,7 +7,7 @@
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -61,8 +61,8 @@ CREATE TABLE `suggestions` (
 
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
-  `name` varchar(16) NOT NULL,
-  `color` varchar(6) NOT NULL DEFAULT '000000',
+  `name` varchar(32) NOT NULL,
+  `color` varchar(6) NOT NULL DEFAULT 'ffffff',
   `background` varchar(6) NOT NULL DEFAULT '000000'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
